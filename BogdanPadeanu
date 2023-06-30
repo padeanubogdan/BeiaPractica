@@ -1,0 +1,31 @@
+import random
+import time
+import paho.mqtt.publish as publish
+import json
+
+
+# Setările brokerului MQTT
+broker = "mqtt.beia-telemetrie.ro"
+port = 1883
+topic = "training/device/Padeanu-Bogdan"
+
+# Funția pentru generarea unui număr random
+def generate_random_number():
+    return random.randint(1, 100)
+
+
+# Publicarea datelor în mod continuu
+while True:
+    # Generarea unui număr random
+    number = generate_random_number()
+    print (number)
+
+    payload_dict = {
+        "number" : number
+    }
+
+    # Publicarea numărului random în topic
+    publish.single(topic, hostname=broker, port=port, payload=json.dumps(payload_dict))
+
+    # Așteptare pentru o perioadă de timp
+    time.sleep(10)
